@@ -23,7 +23,7 @@ const getCountriesHandler = async (req, res) => {
   }
 };
 
-const getCountryHandler = async (req, res) => {
+const getCountryIdHandler = async (req, res) => {
   const { id } = req.params;
   try {
       if (id) {
@@ -36,6 +36,6 @@ const getCountryHandler = async (req, res) => {
 
 }
 
-module.exports = { getCountriesHandler, getCountryHandler };
+module.exports = { getCountriesHandler, getCountryIdHandler };
 
 
