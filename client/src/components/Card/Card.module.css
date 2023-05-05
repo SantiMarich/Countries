@@ -1,17 +1,25 @@
 .card {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    border: 1px solid black;
-    width: 250px;
-    height: 250px;
-    color: black;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  width: 250px;
+  height: 125px;
+  color: black;
+  margin: 10px;
 }
 
-p {
-    text-justify: distribute;
-    text-align: center;
+h1 {
+  height: 40px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
+}
+
+h2 {
+  height: 40px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
 }
