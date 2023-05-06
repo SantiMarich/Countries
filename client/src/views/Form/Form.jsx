@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Form = () => {
@@ -10,91 +10,104 @@ const Form = () => {
     countryId: "",
   });
 
-  const [errors, setErrors] = useState({
-    nombre: "",
-    dificultad: "",
-    duracion: "",
-    temporada: "",
-    countryId: "",
-  });
+  const [countries, setCountries] = useState([]);
+  const [errors, setErrors] = useState({});
 
-  const validateDuracion = (form) => {
-    if (form.duracion >= 1 && form.duracion <= 24) {
-      setErrors({...errors, duracion:""});
-    } else {
-      setErrors({...errors, duracion:"La duracion debe ser entre 1 - 24 horas"});
+  useEffect(() => {
+    fetchCountries();
+  }, []);
+
+  const fetchCountries = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/countries");
+      setCountries(response.data);
+    } catch (error) {
+      console.error("Error fetching countries:", error);
     }
-    if (form.duracion === "") {setErrors({...errors, duracion:"Campo Obligatorio"})}
+  };
+
+  const validateCountryId = (value) => {
+    if (value.length === 3) {
+      setErrors({ ...errors, countryId: "" });
+    } else {
+      setErrors({ ...errors, countryId: "El ID del país debe tener 3 letras" });
+    }
   };
 
   const changeHandler = (event) => {
     const property = event.target.name;
     const value = event.target.value;
 
-    validateDuracion({ ...form, [property]: value });
+    if (property === "countryId") {
+      validateCountryId(value);
+    }
+
     setForm({ ...form, [property]: value });
   };
 
   const submitHandler = (event) => {
-    event.preventDefault()
-    axios.post("http://localhost:3001/activities", form)
-    .then(res=>alert(res))
-    .catch(error=>alert(error))
-  }
+    event.preventDefault();
+    axios
+      .post("http://localhost:3001/activities", form)
+      .then((res) => alert(res))
+      .catch((error) => alert(error));
+  };
 
   return (
     <form onSubmit={submitHandler}>
       <div>
-        <label>Nombre</label>
+        <label>Nombre:</label>
         <input
           type="text"
+          name="nombre"
           value={form.nombre}
           onChange={changeHandler}
-          name="nombre"
-        ></input>
-        <span>{errors.nombre}</span>
+        />
       </div>
       <div>
-        <label>Dificultad</label>
+        <label>Dificultad:</label>
         <input
           type="text"
+          name="dificultad"
           value={form.dificultad}
           onChange={changeHandler}
-          name="dificultad"
-        ></input>
-        <span>{errors.dificultad}</span>
+        />
       </div>
       <div>
-        <label>Duracion</label>
+        <label>Duración:</label>
         <input
           type="text"
+          name="duracion"
           value={form.duracion}
           onChange={changeHandler}
-          name="duracion"
-        ></input>
-        <span>{errors.duracion}</span>
+        />
       </div>
       <div>
-        <label>Temporada</label>
+        <label>Temporada:</label>
         <input
           type="text"
+          name="temporada"
           value={form.temporada}
           onChange={changeHandler}
-          name="temporada"
-        ></input>
-        <span>{errors.temporada}</span>
+        />
       </div>
       <div>
-        <label>ID Pais</label>
-        <input
-          type="text"
+        <label>País:</label>
+        <select
+          name="countryId"
           value={form.countryId}
           onChange={changeHandler}
-          name="countryId"
-        ></input>
-        <span>{errors.countryId}</span>
+        >
+          <option value="">Selecciona un país</option>
+          {countries.map((country) => (
+            <option key={country.id} value={country.id}>
+              {country.id}
+            </option>
+          ))}
+        </select>
+        {errors.countryId && <span>{errors.countryId}</span>}
       </div>
-      <button type="submit">SUBMIT</button>
+      <button type="submit">Enviar</button>
     </form>
   );
 };

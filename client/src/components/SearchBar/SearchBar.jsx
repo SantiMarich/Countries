@@ -16,8 +16,7 @@ function SearchBar({ onSearch }) {
         placeholder="Search..."
         onChange={handleChange}
       />{" "}
-      <button className={style.boton} onClick={() => onSearch(idPais)}>
-     </button>
+      <button className={style.boton} onClick={() => onSearch(idPais)}></button>
     </div>
   );
 }
