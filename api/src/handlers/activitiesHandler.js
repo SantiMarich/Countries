@@ -4,14 +4,14 @@ const {
 } = require("../controllers/activitiesController");
 
 const postActivitiesHandler = async (req, res) => {
-  const { nombre, dificultad, duracion, temporada, countryId } = req.body;
+  const { nombre, dificultad, duracion, temporada, countryIds } = req.body;
   try {
     const newActivity = await createActivity(
       nombre,
       dificultad,
       duracion,
       temporada,
-      countryId
+      countryIds
     );
     res.status(201).json(newActivity);
   } catch (error) {
@@ -28,11 +28,4 @@ const getActivitiesHandler = async (req, res) => {
   }
 };
 
-module.exports = {postActivitiesHandler, getActivitiesHandler}
-
-
-
-
-
-
-
+module.exports = { postActivitiesHandler, getActivitiesHandler };

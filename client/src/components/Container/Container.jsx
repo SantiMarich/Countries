@@ -16,7 +16,7 @@ const Container = ({ countries }) => {
             subregion={country.subregion}
             area={country.area}
             population={country.population}
-            activities={country.activities}
+            activity={country.activity}
           />
         );
       })}

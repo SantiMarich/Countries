@@ -19,9 +19,9 @@ export const getCountries = () => {
   };
 };
 
-export const getDetail = (id) => {
+export const getDetail = (idPais) => {
   return async function (dispatch) {
-    const apiData = await axios.get(`${url}/countries/${id}`);
+    const apiData = await axios.get(`${url}/countries/${idPais}`);
     const countries = apiData.data;
     dispatch({ type: GET_DETAIL, payload: countries });
   };
@@ -35,7 +35,7 @@ export const getQuery = (name) => {
   };
 };
 
-export const getactivities = () => {
+export const getActivities = () => {
   return async function (dispatch) {
     const apiData = await axios.get(`${url}/activities`);
     const activities = apiData.data;
@@ -64,9 +64,9 @@ export function filterByContinent(continent) {
   };
 }
 
-export function filterByActivity(payload) {
+export function filterByActivity(activityName) {
   return {
     type: FILTER_ACTIVITY,
-    payload,
+    payload: activityName,
   };
 }

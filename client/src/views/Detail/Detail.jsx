@@ -5,7 +5,6 @@ import style from "./Detail.module.css";
 
 const Detail = ({ match }) => {
   const [country, setCountry] = useState({});
-  const [activities, setActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,20 +21,7 @@ const Detail = ({ match }) => {
       }
     };
 
-    const fetchActivities = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/activities?country=${match.params.name}`
-        );
-
-        setActivities(response.data);
-      } catch (error) {
-        console.error("Error fetching activities:", error);
-      }
-    };
-
     fetchCountry();
-    fetchActivities();
   }, [match.params.id]);
 
   if (isLoading) {
@@ -53,17 +39,6 @@ const Detail = ({ match }) => {
         <h5>Area: {country.area} km²</h5>
         <h5>Poblacion: {country.population} Habitantes</h5>
       </div>
-
-      <h3>Actividades</h3>
-      {activities.length > 0 ? (
-        <ul>
-          {activities.map((activity) => (
-            <li key={activity.id}>{activity.nombre}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No hay actividades</p>
-      )}
 
       <button>
         <Link to="/create">Crear Actividad</Link>

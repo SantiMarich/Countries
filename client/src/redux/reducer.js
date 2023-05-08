@@ -11,10 +11,10 @@ import {
 
 const initialState = {
   countries: [],
-  allContinents: [],
   allActivities: [],
-  activity: [],
   selectedCountry: null,
+  allCountries: [],
+  selectedActivity: null, // Nuevo estado para almacenar el ID de la actividad seleccionada
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -24,7 +24,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         countries: action.payload,
         allContinents: action.payload,
+        allCountries: action.payload,
+        filteredCountries: action.payload,
       };
+
     case GET_DETAIL:
       return { ...state, selectedCountry: action.payload };
 
@@ -32,14 +35,19 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, countries: action.payload };
 
     case GET_ACTIVITIES:
-      return { ...state, activities: action.payload };
+      return {
+        ...state,
+        allActivities: action.payload,
+      };
 
     case ORDER_NAME:
       const ordenAlfabetico = action.payload;
       const ordenPaises = [...state.countries].sort((a, z) => {
-        if (ordenAlfabetico === "A") {
+        if (ordenAlfabetico === "Default") {
+          return { ...state };
+        } else if (ordenAlfabetico === "A") {
           return a.name.localeCompare(z.name);
-        } else {
+        } else if (ordenAlfabetico === "D") {
           return z.name.localeCompare(a.name);
         }
       });
@@ -51,9 +59,11 @@ const rootReducer = (state = initialState, action) => {
         const populationA = Number(a.population);
         const populationB = Number(b.population);
 
-        if (order === "A") {
+        if (order === "Default") {
+          return { ...state };
+        } else if (order === "A") {
           return populationA - populationB;
-        } else {
+        } else if (order === "D") {
           return populationB - populationA;
         }
       });
@@ -72,20 +82,20 @@ const rootReducer = (state = initialState, action) => {
       };
     }
 
-    case FILTER_ACTIVITY:
-      const allActivities = state.allActivities;
-      const activityFilter =
-        action.payload === "All"
-          ? allActivities.filter((e) => e.activities.length > 0)
-          : allActivities.filter((c) =>
-              c.activities.find(
-                (element) => element.name.toLowerCase() === action.payload
-              )
-            );
+    case FILTER_ACTIVITY: {
+      const { allCountries } = state;
+      const activityName = action.payload.toLowerCase();
+      const filteredCountries = allCountries.filter((country) =>
+        country.activities?.some(
+          (activity) => activity.nombre.toLowerCase() === activityName
+        )
+      );
+
       return {
         ...state,
-        countries: activityFilter,
+        countries: filteredCountries,
       };
+    }
 
     default:
       return { ...state };

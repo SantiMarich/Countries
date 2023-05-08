@@ -5,22 +5,21 @@ const createActivity = async (
   dificultad,
   duracion,
   temporada,
-  countryId
+  countryIds
 ) => {
   try {
-    const country = await Country.findByPk(countryId);
-    if (!country) {
-      throw new Error("País no encontrado");
-    }
     const newActivity = await Activity.create({
       nombre,
       dificultad,
       duracion,
       temporada,
-      countryId,
     });
 
-    await newActivity.addCountry(country);
+    const countries = await Country.findAll({
+      where: { id: countryIds },
+    });
+
+    await newActivity.setCountries(countries);
 
     return newActivity;
   } catch (error) {
@@ -37,5 +36,4 @@ const getAllActivities = async () => {
   return actividades;
 };
 
-
-module.exports = {createActivity, getAllActivities}
+module.exports = { createActivity, getAllActivities };

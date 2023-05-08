@@ -6,6 +6,7 @@ import {
   orderByName,
   orderByPopulation,
   filterByContinent,
+  getActivities,
   filterByActivity,
 } from "../../redux/actions";
 import Paginate from "../../components/Paginate/Paginate";
@@ -13,14 +14,15 @@ import Paginate from "../../components/Paginate/Paginate";
 const Home = () => {
   const dispatch = useDispatch();
   const countries = useSelector((state) => state.countries);
-  const activity = useSelector((state) => state.activity);
+  const activities = useSelector((state) => state.allActivities);
+  const [selectedActivity, setSelectedActivity] = useState("");
   const paisesPorPagina = 10;
   const [paginaActual, setPaginaActual] = useState(0);
   const [order, setOrder] = useState("");
 
   useEffect(() => {
     dispatch(getCountries());
-    dispatch(filterByActivity());
+    dispatch(getActivities());
   }, [dispatch]);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ const Home = () => {
     setOrder(event.target.value);
   };
 
-  const handleOrder = (event) => {
+  const handleOrderByPopulation = (event) => {
     event.preventDefault();
     dispatch(orderByPopulation(event.target.value));
     setOrder(event.target.value);
@@ -49,43 +51,54 @@ const Home = () => {
 
   const handleContinents = (event) => {
     event.preventDefault();
-    dispatch(filterByContinent(event.target.value));
-    setOrder(event.target.value);
+    const continent = event.target.value;
+    if (continent === "All") {
+      dispatch(getCountries());
+    } else {
+      dispatch(filterByContinent(continent));
+    }
   };
 
-  const handleActivity = (event) => {
+  const handleActivityFilter = (event) => {
     event.preventDefault();
-    const activity = event.target.value;
-    dispatch(filterByActivity(activity));
-    setOrder(event.target.value);
+    const activityId = event.target.value;
+    setSelectedActivity(activityId);
+
+    if (activityId === "All") {
+      dispatch(getCountries());
+    } else {
+      dispatch(filterByActivity(activityId));
+    }
   };
 
   return (
     <>
       <h1>Este es el Home</h1>
       <select onChange={handleOrderByName}>
+        <option value="Default">A - Z</option>
         <option value="A">Ascendente</option>
         <option value="D">Descendente</option>
       </select>
-      <select onChange={handleOrder}>
+      <select onChange={handleOrderByPopulation}>
+        <option value="Default">Por Poblacion</option>
         <option value="D">Mayor Poblacion</option>
         <option value="A">Menor Poblacion</option>
       </select>
       <select onChange={handleContinents}>
-        <option value="All">Todos los continentes</option>
-        <option value="Africa">África</option>
-        <option value="Antarctica">Antártida</option>
+        <option value="All">Todos los Continentes</option>
+        <option value="Africa">Africa</option>
+        <option value="Antarctica">Antarctica</option>
         <option value="Asia">Asia</option>
-        <option value="Europe">Europa</option>
-        <option value="North America">América del Norte</option>
-        <option value="Oceania">Oceanía</option>
-        <option value="South America">América del Sur</option>
+        <option value="Europe">Europe</option>
+        <option value="North America">North America</option>
+        <option value="Oceania">Oceania</option>
+        <option value="South America">South America</option>
       </select>
-      <select onChange={handleActivity}>
+      <select onChange={handleActivityFilter}>
         <option value="All">Todas las actividades</option>
-        {activity.map((e) => (
-          <option value={e} key={e}>
-            {e}
+        {activities.map((activity) => (
+          <option key={activity.id} value={activity.nombre}>
+            {activity.nombre}
           </option>
         ))}
       </select>
