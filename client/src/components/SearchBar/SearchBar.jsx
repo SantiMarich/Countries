@@ -1,11 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import style from "./SearchBar.module.css";
 
 function SearchBar({ onSearch }) {
   const [idPais, setIdPais] = useState("");
 
   const handleChange = (event) => {
-    setIdPais(event.target.value);
+    const inputValue = event.target.value;
+    setIdPais(inputValue);
+    onSearch(inputValue);
+  };
+
+  const handleSearch = () => {
+    if (idPais.trim() === "") {
+      setIdPais("");
+      onSearch("");
+    }
   };
 
   return (
@@ -14,9 +23,12 @@ function SearchBar({ onSearch }) {
         className={style.input}
         type="search"
         placeholder="Search..."
+        value={idPais}
         onChange={handleChange}
-      />{" "}
-      <button className={style.boton} onClick={() => onSearch(idPais)}></button>
+      />
+      <button className={style.boton} onClick={handleSearch}>
+        Search
+      </button>
     </div>
   );
 }

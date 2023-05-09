@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import {
@@ -10,14 +11,13 @@ import {
   filterByActivity,
 } from "../../redux/actions";
 import Paginate from "../../components/Paginate/Paginate";
+import FilterByActivity from "../FIlter/FilterByActivity";
 
 const Home = () => {
   const dispatch = useDispatch();
   const countries = useSelector((state) => state.countries);
-  const activities = useSelector((state) => state.allActivities);
-  const [selectedActivity, setSelectedActivity] = useState("");
-  const paisesPorPagina = 10;
-  const [paginaActual, setPaginaActual] = useState(0);
+  const countriesPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(0);
   const [order, setOrder] = useState("");
 
   useEffect(() => {
@@ -26,16 +26,16 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    setPaginaActual(0);
+    setCurrentPage(0);
   }, [countries]);
 
   const onPageChange = (pagina) => {
-    setPaginaActual(pagina);
+    setCurrentPage(pagina);
   };
 
-  const primeraPagina = paginaActual * paisesPorPagina;
-  const ultimaPagina = primeraPagina + paisesPorPagina;
-  const paises = countries.slice(primeraPagina, ultimaPagina);
+  const firstPage = currentPage * countriesPerPage;
+  const lastPage = firstPage + countriesPerPage;
+  const paises = countries.slice(firstPage, lastPage);
 
   const handleOrderByName = (event) => {
     event.preventDefault();
@@ -59,16 +59,8 @@ const Home = () => {
     }
   };
 
-  const handleActivityFilter = (event) => {
-    event.preventDefault();
-    const activityId = event.target.value;
-    setSelectedActivity(activityId);
-
-    if (activityId === "All") {
-      dispatch(getCountries());
-    } else {
-      dispatch(filterByActivity(activityId));
-    }
+  const handleFilterByActivity = (activity) => {
+    dispatch(filterByActivity(activity));
   };
 
   return (
@@ -94,23 +86,30 @@ const Home = () => {
         <option value="Oceania">Oceania</option>
         <option value="South America">South America</option>
       </select>
-      <select onChange={handleActivityFilter}>
-        <option value="All">Todas las actividades</option>
-        {activities.map((activity) => (
-          <option key={activity.id} value={activity.nombre}>
-            {activity.nombre}
-          </option>
-        ))}
-      </select>
+      <FilterByActivity filterByActivity={handleFilterByActivity} />
       <Container countries={paises} />
       <Paginate
         totalPaises={countries.length}
-        paisesPorPagina={paisesPorPagina}
-        paginaActual={paginaActual}
+        paisesPorPagina={countriesPerPage}
+        paginaActual={currentPage}
         onPageChange={onPageChange}
       />
     </>
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => ({
+  countries: state.countries,
+  activities: state.allActivities,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCountries: () => dispatch(getCountries()),
+  orderByName: (value) => dispatch(orderByName(value)),
+  orderByPopulation: (value) => dispatch(orderByPopulation(value)),
+  filterByContinent: (value) => dispatch(filterByContinent(value)),
+  getActivities: () => dispatch(getActivities()),
+  filterByActivity: (value) => dispatch(filterByActivity(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

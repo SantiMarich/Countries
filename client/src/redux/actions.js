@@ -13,32 +13,32 @@ export const FILTER_ACTIVITY = "FILTER_ACTIVITY";
 
 export const getCountries = () => {
   return async function (dispatch) {
-    const apiData = await axios.get(`${url}/countries`);
-    const countries = apiData.data;
+    const dbData = await axios.get(`${url}/countries`);
+    const countries = dbData.data;
     dispatch({ type: GET_COUNTRIES, payload: countries });
   };
 };
 
 export const getDetail = (idPais) => {
   return async function (dispatch) {
-    const apiData = await axios.get(`${url}/countries/${idPais}`);
-    const countries = apiData.data;
+    const dbData = await axios.get(`${url}/countries/${idPais}`);
+    const countries = dbData.data;
     dispatch({ type: GET_DETAIL, payload: countries });
   };
 };
 
 export const getQuery = (name) => {
   return async function (dispatch) {
-    const apiData = await axios.get(`${url}/countries?name=${name}`);
-    const countries = apiData.data;
+    const dbData = await axios.get(`${url}/countries?name=${name}`);
+    const countries = dbData.data;
     dispatch({ type: GET_QUERY, payload: countries });
   };
 };
 
 export const getActivities = () => {
   return async function (dispatch) {
-    const apiData = await axios.get(`${url}/activities`);
-    const activities = apiData.data;
+    const dbData = await axios.get(`${url}/activities`);
+    const activities = dbData.data;
     dispatch({ type: GET_ACTIVITIES, payload: activities });
   };
 };
@@ -64,9 +64,9 @@ export function filterByContinent(continent) {
   };
 }
 
-export function filterByActivity(activityName) {
+export function filterByActivity(activity) {
   return {
     type: FILTER_ACTIVITY,
-    payload: activityName,
+    payload: activity,
   };
 }

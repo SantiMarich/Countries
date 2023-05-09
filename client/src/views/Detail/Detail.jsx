@@ -24,6 +24,14 @@ const Detail = ({ match }) => {
     fetchCountry();
   }, [match.params.id]);
 
+  const handleClose = () => {
+    // Redirigir al usuario a la página de inicio (Home)
+    // Puedes ajustar la ruta según tu configuración de rutas
+    // Por ejemplo, si tu ruta de inicio es "/" en lugar de "/home"
+    // sería <Link to="/"> en lugar de <Link to="/home">
+    return <Link to="/home"></Link>;
+  };
+
   if (isLoading) {
     return <div>Cargando...</div>;
   }
@@ -38,8 +46,20 @@ const Detail = ({ match }) => {
         <h5>Subregion: {country.subregion}</h5>
         <h5>Area: {country.area} km²</h5>
         <h5>Poblacion: {country.population} Habitantes</h5>
+        <h5>Actividades:</h5>
+        <ul>
+          {country.activities.map((activity) => (
+            <li key={activity.id}>
+              Nombre: {activity.nombre}, Dificultad: {activity.dificultad},
+              Duración: {activity.duracion}, Temporada: {activity.temporada}
+            </li>
+          ))}
+        </ul>
       </div>
 
+      <button>
+        <Link to="/home">Close</Link>
+      </button>
       <button>
         <Link to="/create">Crear Actividad</Link>
       </button>

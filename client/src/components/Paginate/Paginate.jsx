@@ -31,6 +31,9 @@ const Paginate = ({
 
   return (
     <div>
+      <p>
+        Página {paginaActual + 1} de {totalPaginas}
+      </p>
       <button onClick={handlePrimeraPagina} className={style.butn}>
         {"<<"}
       </button>

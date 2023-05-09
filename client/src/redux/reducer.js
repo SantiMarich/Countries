@@ -14,18 +14,27 @@ const initialState = {
   allActivities: [],
   selectedCountry: null,
   allCountries: [],
-  selectedActivity: null, // Nuevo estado para almacenar el ID de la actividad seleccionada
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_COUNTRIES:
+      console.log("Countries recibidos:", action.payload);
+      const countriesWithActivities = action.payload.map((country) => {
+        const activities = state.allActivities.filter(
+          (activity) =>
+            country.activities && country.activities.includes(activity.nombre)
+        );
+        return {
+          ...country,
+          activities,
+        };
+      });
       return {
         ...state,
-        countries: action.payload,
+        countries: countriesWithActivities,
         allContinents: action.payload,
         allCountries: action.payload,
-        filteredCountries: action.payload,
       };
 
     case GET_DETAIL:
@@ -35,6 +44,7 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, countries: action.payload };
 
     case GET_ACTIVITIES:
+      console.log("Actividades recibidas:", action.payload);
       return {
         ...state,
         allActivities: action.payload,
@@ -42,15 +52,11 @@ const rootReducer = (state = initialState, action) => {
 
     case ORDER_NAME:
       const ordenAlfabetico = action.payload;
-      const ordenPaises = [...state.countries].sort((a, z) => {
-        if (ordenAlfabetico === "Default") {
-          return { ...state };
-        } else if (ordenAlfabetico === "A") {
-          return a.name.localeCompare(z.name);
-        } else if (ordenAlfabetico === "D") {
-          return z.name.localeCompare(a.name);
-        }
-      });
+      const ordenPaises = [...state.countries].sort((a, z) =>
+        ordenAlfabetico === "A"
+          ? a.name.localeCompare(z.name)
+          : z.name.localeCompare(a.name)
+      );
       return { ...state, countries: ordenPaises };
 
     case ORDER_POPULATION: {
@@ -59,21 +65,16 @@ const rootReducer = (state = initialState, action) => {
         const populationA = Number(a.population);
         const populationB = Number(b.population);
 
-        if (order === "Default") {
-          return { ...state };
-        } else if (order === "A") {
-          return populationA - populationB;
-        } else if (order === "D") {
-          return populationB - populationA;
-        }
+        return order === "A"
+          ? populationA - populationB
+          : populationB - populationA;
       });
 
       return { ...state, countries: ordenPoblacion };
     }
 
     case FILTER_CONTINENT: {
-      const { allContinents } = state;
-      const filteredCountries = allContinents.filter(
+      const filteredCountries = state.allContinents.filter(
         (country) => country.continents === action.payload
       );
       return {
@@ -83,22 +84,27 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case FILTER_ACTIVITY: {
-      const { allCountries } = state;
-      const activityName = action.payload.toLowerCase();
-      const filteredCountries = allCountries.filter((country) =>
-        country.activities?.some(
-          (activity) => activity.nombre.toLowerCase() === activityName
+      const selectedActivity = action.payload;
+
+      if (!selectedActivity) {
+        return {
+          ...state,
+          countries: state.allCountries,
+        };
+      }
+
+      const countriesByActivity = state.allCountries.filter((country) =>
+        country.activities.some(
+          (activity) =>
+            activity.nombre.toLowerCase() === selectedActivity.toLowerCase()
         )
       );
 
-      return {
-        ...state,
-        countries: filteredCountries,
-      };
+      return { ...state, countries: countriesByActivity };
     }
 
     default:
-      return { ...state };
+      return state;
   }
 };
 

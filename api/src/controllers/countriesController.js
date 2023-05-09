@@ -14,7 +14,9 @@ const getcountryByName = async (name) => {
 };
 
 const getAllCountries = async () => {
-  const databaseCountries = await Country.findAll();
+  const databaseCountries = await Country.findAll({
+    include: Activity,
+  });
   return [...databaseCountries];
 };
 
