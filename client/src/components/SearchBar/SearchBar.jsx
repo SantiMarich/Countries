@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./SearchBar.module.css";
+import { useDispatch } from "react-redux";
+import { getCountries } from "../../redux/actions";
 
 function SearchBar({ onSearch }) {
   const [idPais, setIdPais] = useState("");
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCountries());
+  }, [dispatch]);
+
   const handleChange = (event) => {
     const inputValue = event.target.value;
-    setIdPais(inputValue);
-    onSearch(inputValue);
-  };
-
-  const handleSearch = () => {
-    if (idPais.trim() === "") {
+    if (inputValue) {
+      setIdPais(inputValue);
+      onSearch(inputValue);
+    } else if (!inputValue) {
       setIdPais("");
-      onSearch("");
+      dispatch(getCountries());
     }
   };
 
@@ -26,9 +32,6 @@ function SearchBar({ onSearch }) {
         value={idPais}
         onChange={handleChange}
       />
-      <button className={style.boton} onClick={handleSearch}>
-        Search
-      </button>
     </div>
   );
 }

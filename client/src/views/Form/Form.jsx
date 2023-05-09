@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getActivities } from "../../redux/actions";
+import { Link } from "react-router-dom";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -245,7 +246,10 @@ const Form = () => {
         {errors.countryIds && <span>{errors.countryIds}</span>}
       </div>
 
-      <button type="submit">Enviar</button>
+      <button type="submit">Crear</button>
+      <button>
+        <Link to="/home">Close</Link>
+      </button>
     </form>
   );
 };

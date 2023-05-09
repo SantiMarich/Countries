@@ -19,7 +19,6 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_COUNTRIES:
-      console.log("Countries recibidos:", action.payload);
       const countriesWithActivities = action.payload.map((country) => {
         const activities = state.allActivities.filter(
           (activity) =>
@@ -44,7 +43,6 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, countries: action.payload };
 
     case GET_ACTIVITIES:
-      console.log("Actividades recibidas:", action.payload);
       return {
         ...state,
         allActivities: action.payload,

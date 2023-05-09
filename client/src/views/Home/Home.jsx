@@ -65,7 +65,6 @@ const Home = () => {
 
   return (
     <>
-      <h1>Este es el Home</h1>
       <select onChange={handleOrderByName}>
         <option value="Default">A - Z</option>
         <option value="A">Ascendente</option>

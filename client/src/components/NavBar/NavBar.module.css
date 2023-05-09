@@ -1,0 +1,7 @@
+.NavBarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 25px;
+  margin-top: -10px;
+}

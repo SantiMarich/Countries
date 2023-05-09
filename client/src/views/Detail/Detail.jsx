@@ -6,6 +6,7 @@ import style from "./Detail.module.css";
 const Detail = ({ match }) => {
   const [country, setCountry] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCountry = async () => {
@@ -17,30 +18,26 @@ const Detail = ({ match }) => {
         setCountry(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching country:", error);
+        setError(error.message);
       }
     };
 
     fetchCountry();
   }, [match.params.id]);
 
-  const handleClose = () => {
-    // Redirigir al usuario a la página de inicio (Home)
-    // Puedes ajustar la ruta según tu configuración de rutas
-    // Por ejemplo, si tu ruta de inicio es "/" en lugar de "/home"
-    // sería <Link to="/"> en lugar de <Link to="/home">
-    return <Link to="/home"></Link>;
-  };
-
   if (isLoading) {
     return <div>Cargando...</div>;
   }
 
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div>
-      <div>
-        <img src={country.flags} alt="" className={style.imagenFondo} />
-        <h2 className={style.nombre}>{country.name}</h2>
+      <div className={style.detailContainer}>
+        <img src={country.flags} alt="" className={style.detailImage} />
+        <h2 className={style.detailName}>{country.name}</h2>
         <h5>{country.continents}</h5>
         <h5>Capital: {country.capital}</h5>
         <h5>Subregion: {country.subregion}</h5>
