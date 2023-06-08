@@ -1,0 +1,104 @@
+.detailContainer {
+  width: 300px;
+  height: 80%;
+  top: 12.5%;
+  left: 37.5%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin: 25px;
+  filter: contrast(150%);
+  border: none;
+  border-radius: 10px;
+  background-color: #ffffff10;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  overflow: hidden;
+  cursor: pointer;
+  padding: 25px;
+}
+
+.detailImage {
+  width: 250px;
+  height: 175px;
+  object-fit: cover;
+  position: relative;
+  filter: contrast(125%);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.detailName {
+  width: 250px;
+  color: white;
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.continents {
+  color: white;
+  margin: 5px;
+  text-transform: uppercase;
+}
+
+.data {
+  color: white;
+  margin: 5px;
+}
+
+.activity {
+  color: white;
+  margin: 10px;
+  margin-top: 20px;
+}
+
+ul {
+  color: white;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.buttonContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  bottom: 0%;
+  text-decoration: none;
+}
+
+.buttonActivity {
+  width: 250px;
+  height: 35px;
+  background-color: rgb(5, 0, 40);
+  color: white;
+  padding: 5px;
+  border-radius: 6px;
+  outline: none;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.buttonClose {
+  width: 250px;
+  height: 35px;
+  background-color: rgb(5, 0, 40);
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}

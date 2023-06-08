@@ -1,16 +1,17 @@
 .container {
+  width: 1450px;
+  height: 450px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: auto;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
   margin: 25px;
-  height: 500px;
-  background-image: url(../../assets/Imagenes/1.png);
-  background-size: cover;
-  background-position: center;
-}
-
-.pagination {
-  position: absolute;
+  filter: contrast(150%);
+  border: none;
+  border-radius: 10px;
+  background-color: #ffffff10;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
 }

@@ -4,14 +4,14 @@ import style from "./Landing.module.css";
 
 const Landing = () => {
   return (
-    <div className={style.contenedor}>
-      <h1>App Countries</h1>
-      <div className={style.box}>
-        <button className={style.button}>
-          <Link className={style.link} to="/home">
-            Ingresar
-          </Link>
-        </button>
+    <div className={style.containerLanding}>
+      <h1>Explore the World</h1>
+      <h3>Santiago Marich</h3>
+      <h4>Full Stack Developer</h4>
+      <div className={style.boxLanding}>
+        <Link className={style.linkLanding} to="/home">
+          <button className={style.buttonLanding}>HOME PAGE</button>
+        </Link>
       </div>
     </div>
   );

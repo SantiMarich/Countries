@@ -1,0 +1,108 @@
+.formContainer {
+  width: 475px;
+  height: 475px;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  padding: 5px;
+  z-index: 100;
+  border-radius: 10px;
+  background-color: #ffffff10;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+.scrollContainer {
+  height: 150px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.checkboxContainer {
+  height: 150px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.labels {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.inputs {
+  width: 225px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  border: 2px solid white;
+  background: none;
+  outline: none;
+  padding: 2px;
+}
+
+.errors {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  color: crimson;
+  font-size: 12px;
+  height: 25px;
+  font-weight: 500;
+  padding: 5px;
+}
+
+.buttonContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  bottom: 0%;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.buttonCrear {
+  width: 380px;
+  height: 35px;
+  background-color: rgb(5, 0, 0);
+  color: white;
+  padding: 5px;
+  border-radius: 6px;
+  outline: none;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nombrePais {
+  color: white;
+  margin-left: 20px;
+}

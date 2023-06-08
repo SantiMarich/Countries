@@ -36,30 +36,30 @@ const Detail = ({ match }) => {
   return (
     <div>
       <div className={style.detailContainer}>
-        <img src={country.flags} alt="" className={style.detailImage} />
+        <div className={style.containerImage}>
+          <img src={country.flags} alt="" className={style.detailImage} />
+        </div>
         <h2 className={style.detailName}>{country.name}</h2>
-        <h5>{country.continents}</h5>
-        <h5>Capital: {country.capital}</h5>
-        <h5>Subregion: {country.subregion}</h5>
-        <h5>Area: {country.area} km²</h5>
-        <h5>Poblacion: {country.population} Habitantes</h5>
-        <h5>Actividades:</h5>
+        <h5 className={style.continents}>{country.continents}</h5>
+        <h5 className={style.data}>Capital: {country.capital}</h5>
+        <h5 className={style.data}>Subregion: {country.subregion}</h5>
+        <h5 className={style.data}>Area: {country.area} km²</h5>
+        <h5 className={style.data}>Poblacion: {country.population} Habs.</h5>
+        <h5 className={style.activity}>ACTIVIDADES</h5>
         <ul>
           {country.activities.map((activity) => (
-            <li key={activity.id}>
-              Nombre: {activity.nombre}, Dificultad: {activity.dificultad},
-              Duración: {activity.duracion}, Temporada: {activity.temporada}
-            </li>
+            <li key={activity.id}>{activity.nombre}</li>
           ))}
         </ul>
+        <div className={style.buttonContainer}>
+          <Link to="/create">
+            <button className={style.buttonClose}>CREAR ACTIVIDAD</button>
+          </Link>
+          <Link to="/home">
+            <button className={style.buttonClose}>BACK TO HOME</button>
+          </Link>
+        </div>
       </div>
-
-      <button>
-        <Link to="/home">Close</Link>
-      </button>
-      <button>
-        <Link to="/create">Crear Actividad</Link>
-      </button>
     </div>
   );
 };

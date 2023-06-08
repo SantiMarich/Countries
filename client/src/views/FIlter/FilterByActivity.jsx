@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { filterByActivity } from "../../redux/actions";
+import style from "./FilterByActivity.module.css";
 
 const FilterByActivity = () => {
   const activities = useSelector((state) => state.allActivities);
@@ -12,8 +13,8 @@ const FilterByActivity = () => {
   };
 
   return (
-    <select onChange={handleChange}>
-      <option value="">Todos los Paises</option>
+    <select onChange={handleChange} className={style.selector}>
+      <option value="">Filtrar Actividades</option>
       {activities.map((activity) => (
         <option key={activity.id} value={activity.nombre}>
           {activity.nombre}

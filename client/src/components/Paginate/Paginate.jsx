@@ -30,21 +30,21 @@ const Paginate = ({
   };
 
   return (
-    <div>
-      <p>
-        Página {paginaActual + 1} de {totalPaginas}
-      </p>
-      <button onClick={handlePrimeraPagina} className={style.butn}>
-        {"<<"}
+    <div className={style.paginate}>
+      <button onClick={handlePrimeraPagina} className={style.pagecontrol}>
+        {"◄◄"}
       </button>
-      <button onClick={handlePaginaAnterior} className={style.butn}>
-        {"<"}
+      <button onClick={handlePaginaAnterior} className={style.pagecontrol}>
+        {"◄"}
       </button>
-      <button onClick={handlePaginaSiguiente} className={style.butn}>
-        {">"}
+      <div className={style.pagecontrolnumber}>
+        {paginaActual + 1} de {totalPaginas}
+      </div>
+      <button onClick={handlePaginaSiguiente} className={style.pagecontrol}>
+        {"►"}
       </button>
-      <button onClick={handleUltimaPagina} className={style.butn}>
-        {">>"}
+      <button onClick={handleUltimaPagina} className={style.pagecontrol}>
+        {"►►"}
       </button>
     </div>
   );

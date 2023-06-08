@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getActivities } from "../../redux/actions";
 import { Link } from "react-router-dom";
+import style from "./Form.module.css";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -187,70 +188,93 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div>
-        <label>Nombre:</label>
-        <input
-          type="text"
-          name="nombre"
-          value={form.nombre}
-          onChange={changeHandler}
-        />
-        {errors.nombre && <span>{errors.nombre}</span>}
-      </div>
-      <div>
-        <label>Dificultad:</label>
-        <input
-          type="text"
-          name="dificultad"
-          value={form.dificultad}
-          onChange={changeHandler}
-        />
-        {errors.dificultad && <span>{errors.dificultad}</span>}
-      </div>
-      <div>
-        <label>Duración:</label>
-        <input
-          type="text"
-          name="duracion"
-          value={form.duracion}
-          onChange={changeHandler}
-        />
-        {errors.duracion && <span>{errors.duracion}</span>}
-      </div>
-      <div>
-        <label>Temporada:</label>
-        <input
-          type="text"
-          name="temporada"
-          value={form.temporada}
-          onChange={changeHandler}
-        />
-        {errors.temporada && <span>{errors.temporada}</span>}
-      </div>
-      <div>
-        <label>Países:</label>
-        {countries.map((country) => (
-          <div key={country.id}>
-            <input
-              type="checkbox"
-              name="countryIds"
-              id={`country-${country.id}`}
-              value={country.id}
-              checked={form.countryIds.includes(country.id)}
-              onChange={changeHandler}
-            />
-            <label htmlFor={`country-${country.id}`}>{country.name}</label>
+    <div className={style.formContainer}>
+      <form onSubmit={submitHandler}>
+        <div className={style.form}>
+          <label className={style.labels}>Nombre</label>
+          <input
+            type="text"
+            name="nombre"
+            value={form.nombre}
+            onChange={changeHandler}
+            className={style.inputs}
+          />
+          {errors.nombre && (
+            <span className={style.errors}>{errors.nombre}</span>
+          )}
+        </div>
+        <div className={style.form}>
+          <label className={style.labels}>Dificultad</label>
+          <input
+            type="text"
+            name="dificultad"
+            value={form.dificultad}
+            onChange={changeHandler}
+            className={style.inputs}
+          />
+          {errors.dificultad && (
+            <span className={style.errors}>{errors.dificultad}</span>
+          )}
+        </div>
+        <div className={style.form}>
+          <label className={style.labels}>Duración</label>
+          <input
+            type="text"
+            name="duracion"
+            value={form.duracion}
+            onChange={changeHandler}
+            className={style.inputs}
+          />
+          {errors.duracion && (
+            <span className={style.errors}>{errors.duracion}</span>
+          )}
+        </div>
+        <div className={style.form}>
+          <label className={style.labels}>Temporada</label>
+          <input
+            type="text"
+            name="temporada"
+            value={form.temporada}
+            onChange={changeHandler}
+            className={style.inputs}
+          />
+          {errors.temporada && (
+            <span className={style.errors}>{errors.temporada}</span>
+          )}
+        </div>
+        <div className={style.scrollContainer}>
+          <div className={style.checkboxContainer}>
+            {countries.map((country) => (
+              <div key={country.id}>
+                <input
+                  className={style.inputCheck}
+                  type="checkbox"
+                  name="countryIds"
+                  id={`country-${country.id}`}
+                  value={country.id}
+                  checked={form.countryIds.includes(country.id)}
+                  onChange={changeHandler}
+                />
+                <label
+                  htmlFor={`country-${country.id}`}
+                  className={style.nombrePais}
+                >
+                  {country.name}
+                </label>
+              </div>
+            ))}
+            {errors.countryIds && (
+              <span className={style.errors}>{errors.countryIds}</span>
+            )}
           </div>
-        ))}
-        {errors.countryIds && <span>{errors.countryIds}</span>}
-      </div>
-
-      <button type="submit">Crear</button>
-      <button>
-        <Link to="/home">Close</Link>
-      </button>
-    </form>
+        </div>
+        <div className={style.buttonContainer}>
+          <button type="submit" className={style.buttonCrear}>
+            CREAR ACTIVIDAD
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

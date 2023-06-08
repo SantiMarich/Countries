@@ -1,30 +1,66 @@
 .card {
   position: relative;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  border: 1px solid black;
-  width: 150px;
-  height: 150px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 175px;
   color: rgb(255, 255, 255);
-  margin: 30px;
+  margin: 20px 20px 20px 20px;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 0 20px 0px hsl(0, 0%, 20%);
 }
 
-img {
-  width: 150px;
-  height: 100px;
+.cardContenido {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 63%;
+  width: 250px;
+  height: 65px;
+  font-size: 6px;
+  font-weight: lighter;
+  color: #e4e4ee;
+  background-color: rgb(2, 0, 20);
+  opacity: 75%;
+  padding: 10px;
+  text-decoration: none;
+  z-index: 100;
 }
 
-h1 {
-  height: 40px;
-  padding: 0px;
-  margin: 0px;
-  font-size: 20px;
+.cardContinente {
+  height: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  z-index: 100;
 }
 
-h2 {
-  height: 40px;
-  padding: 0px;
-  margin: 0px;
-  font-size: 15px;
+.cardPais {
+  height: 35px;
+  font-size: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  text-transform: uppercase;
+}
+
+.imagenFondo {
+  width: 250px;
+  height: 175px;
+  object-fit: cover;
+  position: absolute;
+  filter: contrast(125%);
+  transition: 0.8s;
+  z-index: -100;
+}
+
+.imagenFondo:hover {
+  transform: scale(0.5);
+  transition: 0.8s;
 }

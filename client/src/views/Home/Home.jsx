@@ -12,6 +12,7 @@ import {
 } from "../../redux/actions";
 import Paginate from "../../components/Paginate/Paginate";
 import FilterByActivity from "../FIlter/FilterByActivity";
+import style from "./Home.module.css";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -64,36 +65,42 @@ const Home = () => {
   };
 
   return (
-    <>
-      <select onChange={handleOrderByName}>
-        <option value="Default">A - Z</option>
-        <option value="A">Ascendente</option>
-        <option value="D">Descendente</option>
-      </select>
-      <select onChange={handleOrderByPopulation}>
-        <option value="Default">Por Poblacion</option>
-        <option value="D">Mayor Poblacion</option>
-        <option value="A">Menor Poblacion</option>
-      </select>
-      <select onChange={handleContinents}>
-        <option value="All">Todos los Continentes</option>
-        <option value="Africa">Africa</option>
-        <option value="Antarctica">Antarctica</option>
-        <option value="Asia">Asia</option>
-        <option value="Europe">Europe</option>
-        <option value="North America">North America</option>
-        <option value="Oceania">Oceania</option>
-        <option value="South America">South America</option>
-      </select>
-      <FilterByActivity filterByActivity={handleFilterByActivity} />
-      <Container countries={paises} />
-      <Paginate
-        totalPaises={countries.length}
-        paisesPorPagina={countriesPerPage}
-        paginaActual={currentPage}
-        onPageChange={onPageChange}
-      />
-    </>
+    <div className={style.container}>
+      <div className={style.selectorContainer}>
+        <select onChange={handleOrderByName} className={style.selector}>
+          <option value="Default">Ordenar A - Z</option>
+          <option value="A">Ascendente</option>
+          <option value="D">Descendente</option>
+        </select>
+        <select onChange={handleOrderByPopulation} className={style.selector}>
+          <option value="Default">Ordenar Poblacion</option>
+          <option value="D">Mayor Poblacion</option>
+          <option value="A">Menor Poblacion</option>
+        </select>
+        <select onChange={handleContinents} className={style.selector}>
+          <option value="All">Filtrar Continentes</option>
+          <option value="Africa">Africa</option>
+          <option value="Antarctica">Antarctica</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe">Europe</option>
+          <option value="North America">North America</option>
+          <option value="Oceania">Oceania</option>
+          <option value="South America">South America</option>
+        </select>
+        <FilterByActivity filterByActivity={handleFilterByActivity} />
+      </div>
+      <div className={style.containerCards}>
+        <Container countries={paises} />
+      </div>
+      <div className={style.paginate}>
+        <Paginate
+          totalPaises={countries.length}
+          paisesPorPagina={countriesPerPage}
+          paginaActual={currentPage}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </div>
   );
 };
 
